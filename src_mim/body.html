@@ -1,0 +1,193 @@
+<div class="app" id="app">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="28" height="28" rx="8" fill="var(--shell)"/><rect x="6" y="6" width="20" height="8" rx="2.5" fill="var(--lcd)"/><g fill="var(--key-op)"><rect x="6" y="17" width="5" height="4.5" rx="1.5"/><rect x="13.5" y="17" width="5" height="4.5" rx="1.5"/><rect x="6" y="23.5" width="5" height="4" rx="1.5"/><rect x="13.5" y="23.5" width="5" height="4" rx="1.5"/></g><rect x="21" y="17" width="5" height="10.5" rx="1.5" fill="var(--accent)"/></svg>
+      <span>MiMath</span>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab" role="tab" id="tab-calc" data-tab="calc" aria-selected="true">Calculator</button>
+      <button class="tab" role="tab" id="tab-solve" data-tab="solve" aria-selected="false">Solve</button>
+      <button class="tab" role="tab" id="tab-graph" data-tab="graph" aria-selected="false">Graph</button>
+      <button class="tab" role="tab" id="tab-charts" data-tab="charts" aria-selected="false">Charts</button>
+      <button class="tab" role="tab" id="tab-complex" data-tab="complex" aria-selected="false">Complex</button>
+      <button class="tab" role="tab" id="tab-bases" data-tab="bases" aria-selected="false">Bases</button>
+      <button class="tab" role="tab" id="tab-convert" data-tab="convert" aria-selected="false">Convert</button>
+      <button class="tab" role="tab" id="tab-tools" data-tab="tools" aria-selected="false">Tools</button>
+    </nav>
+    <div class="top-end">
+      <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch light or dark theme" title="Switch theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </header>
+  <div class="banner" id="lib-banner" hidden>Some of the maths libraries could not be loaded, so parts of this page will not work. Check your connection and reload.</div>
+
+  <!-- CALCULATOR -->
+  <section data-view="calc" id="v-calc" role="tabpanel" aria-labelledby="tab-calc">
+    <div class="calc-grid">
+      <div class="device">
+        <div class="lcd">
+          <div class="lcd-top"><span id="ind-angle">DEG</span><span id="ind-2nd"></span><span id="ind-mem"></span></div>
+          <input id="expr" class="lcd-expr" type="text" inputmode="none" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type or tap, e.g. 2(3+4)^2" aria-label="Expression">
+          <div id="lcd-res" class="lcd-result dim" aria-live="polite">0</div>
+        </div>
+        <div class="modes">
+          <button class="mkey" id="m-angle" type="button" aria-pressed="false" title="Switch between degrees and radians">DEG</button>
+          <button class="mkey" data-mem="plus" type="button" title="Add result to memory">M+</button>
+          <button class="mkey" data-mem="minus" type="button" title="Subtract result from memory">M−</button>
+          <button class="mkey" data-mem="recall" type="button" title="Insert memory value">MR</button>
+          <button class="mkey" data-mem="clear" type="button" title="Clear memory">MC</button>
+        </div>
+        <div class="keys" id="keys"></div>
+      </div>
+      <div class="calc-side">
+        <div class="card ans-card">
+          <div class="card-h"><h3>Result</h3><button class="btn small" id="copy-res" type="button">Copy</button></div>
+          <div class="res-main" id="res-main">Enter an expression</div>
+          <div class="res-alts" id="res-alts"></div>
+        </div>
+        <div class="card">
+          <div class="card-h"><h3>Step by step</h3><span class="hint">Order of operations</span></div>
+          <div id="calc-steps"><p class="empty">Press = to see the working, one operation at a time.</p></div>
+        </div>
+        <div class="card">
+          <div class="card-h"><h3>History</h3><button class="btn small ghost" id="clear-hist" type="button">Clear</button></div>
+          <ul class="history" id="history"></ul>
+        </div>
+        <div class="card">
+          <div class="card-h"><h3>Quick insert</h3><span class="hint">Tap a text box, then a button</span></div>
+          <div class="symbar" data-sym="calc" style="margin-top:0"></div>
+          <p class="hint" style="margin-top:8px">Complex numbers use <span class="mono">i</span>, for example <span class="mono">(3+4i)*(1-2i)</span>. Binary and hex work too: <span class="mono">0b1010 + 0xFF</span>. See the Tools tab for every function.</p>
+        </div>
+        <details class="card help">
+          <summary>Tips for typing</summary>
+          <ul>
+            <li>Implicit multiplication works: <code>2(3+4)</code>, <code>3pi</code>, <code>2sin(30)</code>.</li>
+            <li><code>log(x)</code> is base 10, <code>ln(x)</code> is natural, <code>logb(x, 5)</code> is any base.</li>
+            <li><code>Ans</code> is your last result. <code>5!</code>, <code>nCr(5,2)</code>, <code>nPr(5,2)</code>, <code>7 mod 3</code> and <code>20%</code> all work.</li>
+            <li>The DEG / RAD switch only affects this Calculator tab. Solve, Graph and Charts use radians.</li>
+          </ul>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLVE -->
+  <section data-view="solve" id="v-solve" role="tabpanel" aria-labelledby="tab-solve" hidden>
+    <div class="card solve-input">
+      <div class="card-h"><h3>What do you want to solve?</h3></div>
+      <div class="chips" id="solve-modes" role="radiogroup" aria-label="Problem type"></div>
+      <div class="fields" id="solve-fields"></div>
+      <div class="symbar" data-sym="solve"></div>
+      <div class="act-row">
+        <button class="btn primary" id="solve-go" type="button">Solve with steps</button>
+        <span class="hint" id="solve-hint"></span>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:6px">Try an example</div>
+        <div class="chips" id="solve-examples"></div>
+      </div>
+    </div>
+    <div id="solve-out" aria-live="polite"></div>
+  </section>
+
+  <!-- GRAPH -->
+  <section data-view="graph" id="v-graph" role="tabpanel" aria-labelledby="tab-graph" hidden>
+    <div class="graph-layout">
+      <div class="card">
+        <div class="card-h"><h3>Curves</h3><button class="btn small" id="g-add" type="button">+ Add curve</button></div>
+        <div class="grows" id="grows"></div>
+        <div class="symbar" data-sym="graph"></div>
+        <div style="margin-top:12px">
+          <div class="eyebrow" style="margin-bottom:6px">Examples</div>
+          <div class="chips" id="g-examples"></div>
+        </div>
+        <div class="opts">
+          <label><input type="checkbox" id="g-deriv"> Also draw the derivative of the first curve</label>
+          <label><input type="checkbox" id="g-keys" checked> Mark roots, peaks and crossings</label>
+        </div>
+        <details class="tbl" id="g-table">
+          <summary>Table of values</summary>
+          <div class="tbl-fields">
+            <div class="field"><label for="t-from">From x</label><input class="in" id="t-from" value="-5" inputmode="decimal"></div>
+            <div class="field"><label for="t-to">To x</label><input class="in" id="t-to" value="5" inputmode="decimal"></div>
+            <div class="field"><label for="t-step">Step</label><input class="in" id="t-step" value="1" inputmode="decimal"></div>
+          </div>
+          <div class="tbl-scroll"><table class="data" id="t-data"></table></div>
+        </details>
+      </div>
+      <div class="card">
+        <div class="plot-wrap" id="g-wrap"><canvas id="g-canvas" aria-label="Graph of the curves"></canvas></div>
+        <div class="legend" id="g-legend"></div>
+        <div class="plot-bar">
+          <button class="btn small" id="g-zin" type="button" aria-label="Zoom in">+</button>
+          <button class="btn small" id="g-zout" type="button" aria-label="Zoom out">−</button>
+          <button class="btn small" id="g-fit" type="button">Fit to curves</button>
+          <button class="btn small" id="g-home" type="button">Reset view</button>
+          <button class="btn small" id="g-square" type="button">Equal axes</button>
+          <span class="coords" id="g-coords">Drag to pan. Scroll or pinch to zoom.</span>
+        </div>
+        <div class="stat-grid" id="g-keylist"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHARTS -->
+  <section data-view="charts" id="v-charts" role="tabpanel" aria-labelledby="tab-charts" hidden>
+    <div class="chart-layout">
+      <div class="card">
+        <div class="card-h"><h3>Data source</h3>
+          <div class="seg" role="group" aria-label="Data source">
+            <button type="button" id="src-eq" aria-pressed="true">From an equation</button>
+            <button type="button" id="src-data" aria-pressed="false">My own data</button>
+          </div>
+        </div>
+        <div id="ch-eq-panel" class="solve-input">
+          <div class="field"><label for="ch-expr">f(x) =</label><input class="in" id="ch-expr" value="sin(x)" autocomplete="off" spellcheck="false"></div>
+          <div class="fields">
+            <div class="field"><label for="ch-a">From x</label><input class="in" id="ch-a" value="0" inputmode="decimal"></div>
+            <div class="field"><label for="ch-b">To x</label><input class="in" id="ch-b" value="6.28" inputmode="decimal"></div>
+            <div class="field"><label for="ch-n">Points</label><input class="in" id="ch-n" value="12" inputmode="numeric"></div>
+          </div>
+          <div class="symbar" data-sym="chart"></div>
+        </div>
+        <div id="ch-data-panel" class="solve-input" hidden>
+          <div class="field"><label for="ch-data">Your data</label>
+            <textarea class="in" id="ch-data" rows="8" spellcheck="false" placeholder="One value per line, optionally with a label:&#10;Maths, 72&#10;Physics, 65&#10;Chemistry, 80"></textarea>
+          </div>
+          <div class="act-row">
+            <button class="btn small" id="ch-sample" type="button">Load sample</button>
+            <span class="hint">Labels are optional. Pairs like <span class="mono">3, 7</span> are treated as x, y for scatter charts.</span>
+          </div>
+        </div>
+        <div style="margin-top:14px">
+          <div class="eyebrow" style="margin-bottom:6px">Chart type</div>
+          <div class="chips" id="ch-types" role="radiogroup" aria-label="Chart type"></div>
+        </div>
+        <div class="act-row" style="margin-top:14px">
+          <button class="btn primary" id="ch-go" type="button">Draw chart</button>
+          <button class="btn" id="ch-copy" type="button">Copy as CSV</button>
+        </div>
+        <div class="hint" id="ch-msg" style="margin-top:8px"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><h3 id="ch-title">Chart</h3></div>
+        <div class="chart-box"><canvas id="ch-canvas" role="img" aria-label="Chart"></canvas></div>
+        <p class="hint" id="ch-cap" style="margin-top:10px"></p>
+        <dl class="stat-grid" id="ch-stats"></dl>
+        <details class="tbl" id="ch-table-d">
+          <summary>Data table</summary>
+          <div class="tbl-scroll"><table class="data" id="ch-table"></table></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section data-view="complex" id="v-complex" role="tabpanel" aria-labelledby="tab-complex" hidden></section>
+  <section data-view="bases" id="v-bases" role="tabpanel" aria-labelledby="tab-bases" hidden></section>
+  <section data-view="convert" id="v-convert" role="tabpanel" aria-labelledby="tab-convert" hidden></section>
+  <section data-view="tools" id="v-tools" role="tabpanel" aria-labelledby="tab-tools" hidden></section>
+
+  <p class="foot">MiMath works out answers on your device. Always check the working against your own notes.</p>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
