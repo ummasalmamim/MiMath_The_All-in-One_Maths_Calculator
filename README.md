@@ -4,7 +4,7 @@
 
 MiMath shows you how an answer was reached, not just the answer. It solves equations, does calculus, draws graphs and charts, works with complex numbers and number bases, converts units, and comes with 33 extra calculators. Each result comes with step-by-step working. You don't need to install anything, create an account or run a server: open the page and start.
 
-🔗 **Live demo:** https://ummasalmamim.github.io/mimath/
+🔗 **Live demo:** https://ummasalmamim.github.io/MiMath_The_All-in-One_Maths_Calculator/
 
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
