@@ -309,7 +309,7 @@ The **Tools → Function library** lists all of them, with search.
 ## 🚀 Getting started
 
 ### Option 1: use it online
-Visit the **[live demo](https://ummasalmamim.github.io/mimath/)**.
+Visit the **[live demo](https://ummasalmamim.github.io/MiMath_The_All-in-One_Maths_Calculator/)**.
 
 ### Option 2: run it on your computer
 1. Download this repository: click **Code → Download ZIP**, or clone it:
